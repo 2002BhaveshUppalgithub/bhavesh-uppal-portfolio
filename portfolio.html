@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhavesh Uppal | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            @apply bg-gray-950 text-gray-100;
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #6366f1, #d946ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .social-link {
+            transition: transform 0.3s ease-in-out;
+        }
+        .social-link:hover {
+            transform: scale(1.15);
+        }
+
+        .section-heading {
+            @apply text-4xl sm:text-5xl font-extrabold text-center mb-12 relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .project-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            @apply transform hover:scale-105 hover:shadow-2xl;
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(139, 92, 246, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+
+        /* Particle Background */
+        .particle-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(139, 92, 246, 0.5); /* purple-400 with opacity */
+            animation: move-particle linear infinite;
+        }
+        @keyframes move-particle {
+            0% { transform: translate(0, 0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)); opacity: 0; }
+        }
+
+        /* Software Engineer Animation Styles */
+        .software-engineer-container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            margin: 0 auto;
+        }
+
+        /* Floating Code Elements */
+        .floating-code {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #fff;
+            animation: float-code 6s ease-in-out infinite;
+            z-index: 5;
+            cursor: pointer;
+        }
+
+        .html-code {
+            top: 50px;
+            right: -20px;
+            animation-delay: 0s;
+        }
+
+        .css-code {
+            top: 150px;
+            left: -30px;
+            animation-delay: 2s;
+        }
+
+        .js-code {
+            bottom: 100px;
+            right: -40px;
+            animation-delay: 4s;
+        }
+
+        .code-tag { color: #ff6b6b; }
+        .code-class { color: #4ecdc4; }
+        .code-bracket { color: #ffe66d; }
+        .code-property { color: #a8e6cf; }
+        .code-keyword { color: #ff8b94; }
+        .code-variable { color: #ffd93d; }
+        .code-operator { color: #6bcf7f; }
+        .code-string { color: #ffb3ba; }
+        .code-text { color: #ffffff; }
+
+        /* Laptop Animation */
+        .laptop-container {
+            position: relative;
+            width: 200px;
+            height: 120px;
+            margin: 0 auto 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .laptop-screen {
+            width: 180px;
+            height: 100px;
+            background: #1a202c;
+            border: 3px solid #4a5568;
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .screen-content {
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: #e2e8f0;
+        }
+
+        .code-line-animated {
+            margin-bottom: 2px;
+            animation: typewriter 0.5s ease-in-out;
+            animation-fill-mode: both;
+        }
+
+        .code-line-animated:nth-child(1) { animation-delay: 0s; }
+        .code-line-animated:nth-child(2) { animation-delay: 0.5s; }
+        .code-line-animated:nth-child(3) { animation-delay: 1s; }
+        .code-line-animated:nth-child(4) { animation-delay: 1.5s; }
+        .code-line-animated:nth-child(5) { animation-delay: 2s; }
+
+        .laptop-base {
+            width: 200px;
+            height: 20px;
+            background: #2d3748;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Floating Tech Icons */
+        .floating-tech-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .tech-icon {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: float-tool 4s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        .react-icon {
+            top: 20px;
+            left: 20px;
+            animation-delay: 0s;
+        }
+
+        .node-icon {
+            top: 20px;
+            right: 20px;
+            animation-delay: 1s;
+        }
+
+        .js-icon {
+            bottom: 80px;
+            left: 20px;
+            animation-delay: 2s;
+        }
+
+        .css-icon {
+            bottom: 80px;
+            right: 20px;
+            animation-delay: 3s;
+        }
+
+        .icon-circle {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin-bottom: 5px;
+        }
+
+        .icon-label {
+            font-size: 10px;
+            color: #e2e8f0;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Code Brackets */
+        .code-brackets {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 100px;
+            z-index: 5;
+        }
+
+        .bracket {
+            font-size: 60px;
+            color: #6366f1;
+            font-weight: bold;
+            animation: bracket-pulse 2s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        .left-bracket {
+            animation-delay: 0s;
+        }
+
+        .right-bracket {
+            animation-delay: 1s;
+        }
+
+        /* Browser Window */
+        .browser-window {
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 250px;
+            background: #2d3748;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: slide-in-right 1s ease-out;
+            cursor: pointer;
+            z-index: 15;
+        }
+
+        .browser-header {
+            background: #4a5568;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27ca3f; }
+
+        .browser-title {
+            color: #e2e8f0;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .browser-content {
+            padding: 12px;
+            background: #1a202c;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+        }
+
+        .code-line {
+            display: flex;
+            margin-bottom: 4px;
+            animation: typewriter 0.5s ease-in-out;
+        }
+
+        .line-number {
+            color: #718096;
+            margin-right: 12px;
+            width: 20px;
+            text-align: right;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes float-code {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        @keyframes float-tool {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        @keyframes bracket-pulse {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% { 
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-in-right {
+            0% { transform: translateX(100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes typewriter {
+            0% { opacity: 0; transform: translateX(-10px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes pulse-gentle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Animation Classes */
+        .animate-gradient {
+            background: linear-gradient(90deg, #6366f1, #d946ef, #6366f1);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        .pulse-animation {
+            animation: pulse-gentle 2s ease-in-out infinite;
+        }
+
+        /* Skill Badges with Icons */
+        .skill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .skill-icon {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 py-4 glass-card px-4">
+        <nav class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-tight">Bhavesh<span class="gradient-text">.</span></a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#about" class="hover:text-purple-400 transition-colors">About</a>
+                <a href="#projects" class="hover:text-purple-400 transition-colors">Projects</a>
+                <a href="#freelance" class="hover:text-purple-400 transition-colors">Services</a>
+                <a href="#resume" class="hover:text-purple-400 transition-colors">Resume</a>
+                <a href="#contact" class="hover:text-purple-400 transition-colors">Contact</a>
+            </div>
+            <a href="#contact" class="md:hidden py-2 px-4 bg-purple-600 rounded-full hover:bg-purple-700 transition-colors">Hire Me</a>
+        </nav>
+    </header>
+
+    <main class="pt-20">
+
+        <!-- Hero Section -->
+        <section id="hero" class="relative container mx-auto px-6 py-24 flex flex-col lg:flex-row items-center justify-between min-h-screen">
+            <!-- Particle Background -->
+            <div id="particle-bg" class="particle-container"></div>
+            
+            <!-- Left Content -->
+            <div class="z-10 fade-in-up lg:w-1/2 lg:pr-12">
+                <div class="mb-6">
+                    <p class="text-xl sm:text-2xl font-medium text-gray-400 mb-4">Hello, my name is</p>
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tighter">
+                        <span class="gradient-text animate-gradient">Bhavesh Uppal</span>
+                    </h1>
+                    <p class="mt-4 text-xl sm:text-2xl text-gray-300 font-light">
+                        I build beautiful digital experiences.
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#projects" class="py-3 px-8 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full text-white font-bold hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg pulse-animation">
+                        <span>View My Work</span>
+                        <svg class="w-5 h-5 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/bhavesh-uppal-2437402b4" target="_blank" class="py-3 px-8 border border-gray-600 rounded-full text-gray-300 font-bold hover:bg-gray-800 transition-colors">
+                        <span>LinkedIn</span>
+                        <svg class="w-5 h-5 ml-2 inline" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/2002BhaveshUppalgithub" target="_blank" class="py-3 px-8 border border-gray-600 rounded-full text-gray-300 font-bold hover:bg-gray-800 transition-colors">
+                        <span>GitHub</span>
+                        <svg class="w-5 h-5 ml-2 inline" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Content - Software Engineer Animations -->
+            <div class="z-10 lg:w-1/2 lg:pl-12 mt-12 lg:mt-0">
+                <div class="relative">
+                    <!-- Main Animation Container -->
+                    <div class="software-engineer-container">
+                        <!-- Floating Code Elements -->
+                        <div class="floating-code html-code">
+                            <div class="code-snippet">
+                                <span class="code-tag">&lt;div&gt;</span>
+                                <span class="code-text">Frontend</span>
+                                <span class="code-tag">&lt;/div&gt;</span>
+                            </div>
+                        </div>
+                        <div class="floating-code css-code">
+                            <div class="code-snippet">
+                                <span class="code-class">.developer</span>
+                                <span class="code-bracket">{</span>
+                                <span class="code-property">skill: 100%</span>
+                                <span class="code-bracket">}</span>
+                            </div>
+                        </div>
+                        <div class="floating-code js-code">
+                            <div class="code-snippet">
+                                <span class="code-keyword">const</span>
+                                <span class="code-variable">developer</span>
+                                <span class="code-operator">=</span>
+                                <span class="code-string">"Bhavesh"</span>
+                            </div>
+                        </div>
+
+                        <!-- Laptop with Code -->
+                        <div class="laptop-container">
+                            <div class="laptop-screen">
+                                <div class="screen-content">
+                                    <div class="code-line-animated">
+                                        <span class="code-tag">&lt;html&gt;</span>
+                                    </div>
+                                    <div class="code-line-animated">
+                                        <span class="code-tag">&lt;body&gt;</span>
+                                    </div>
+                                    <div class="code-line-animated">
+                                        <span class="code-tag">&lt;h1&gt;</span>
+                                        <span class="code-text">Hello World</span>
+                                        <span class="code-tag">&lt;/h1&gt;</span>
+                                    </div>
+                                    <div class="code-line-animated">
+                                        <span class="code-tag">&lt;/body&gt;</span>
+                                    </div>
+                                    <div class="code-line-animated">
+                                        <span class="code-tag">&lt;/html&gt;</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="laptop-base"></div>
+                        </div>
+
+                        <!-- Floating Tech Icons -->
+                        <div class="floating-tech-icons">
+                            <div class="tech-icon react-icon">
+                                <div class="icon-circle">⚛️</div>
+                                <div class="icon-label">React</div>
+                            </div>
+                            <div class="tech-icon node-icon">
+                                <div class="icon-circle">🟢</div>
+                                <div class="icon-label">Node.js</div>
+                            </div>
+                            <div class="tech-icon js-icon">
+                                <div class="icon-circle">JS</div>
+                                <div class="icon-label">JavaScript</div>
+                            </div>
+                            <div class="tech-icon css-icon">
+                                <div class="icon-circle">CSS</div>
+                                <div class="icon-label">CSS3</div>
+                            </div>
+                        </div>
+
+                        <!-- Code Brackets -->
+                        <div class="code-brackets">
+                            <div class="bracket left-bracket">{</div>
+                            <div class="bracket right-bracket">}</div>
+                        </div>
+
+                        <!-- Browser Window -->
+                        <div class="browser-window">
+                            <div class="browser-header">
+                                <div class="browser-dots">
+                                    <span class="dot red"></span>
+                                    <span class="dot yellow"></span>
+                                    <span class="dot green"></span>
+                                </div>
+                                <div class="browser-title">Portfolio.jsx</div>
+                            </div>
+                            <div class="browser-content">
+                                <div class="code-line">
+                                    <span class="line-number">1</span>
+                                    <span class="code-text">import React from 'react'</span>
+                                </div>
+                                <div class="code-line">
+                                    <span class="line-number">2</span>
+                                    <span class="code-text">import { useState, useEffect } from 'react'</span>
+                                </div>
+                                <div class="code-line">
+                                    <span class="line-number">3</span>
+                                    <span class="code-text">const Portfolio = () => {</span>
+                                </div>
+                                <div class="code-line">
+                                    <span class="line-number">4</span>
+                                    <span class="code-text">  return &lt;div&gt;Hello World&lt;/div&gt;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="container mx-auto px-6 py-24">
+            <h2 class="section-heading gradient-text">About Me</h2>
+            <div class="max-w-4xl mx-auto flex flex-col items-center fade-in-up">
+                <p class="text-lg text-gray-400 leading-relaxed text-center mb-12">
+                    I'm a highly-skilled and results-driven Computer Engineering graduate from Guru Nanak Dev University, with a CGPA of 8.88 and over four years of experience in full-stack development. My expertise lies in building, maintaining, and optimizing scalable web applications.
+                </p>
+
+                <div class="glass-card rounded-2xl p-8 mb-8 w-full">
+                    <h3 class="text-2xl font-bold mb-4">Education</h3>
+                    <ul class="text-lg text-gray-300 space-y-4">
+                        <li class="flex justify-between items-center pb-2 border-b border-gray-700">
+                            <span class="font-bold">Guru Nanak Dev University</span>
+                            <span class="text-sm text-gray-400">Sept 2021 – July 2025</span>
+                        </li>
+                        <li class="flex justify-between items-center pb-2 border-b border-gray-700">
+                            <span class="font-bold">Shri Ram Ashram Public School (Class 12th)</span>
+                            <span class="text-sm text-gray-400">2020 – 2021</span>
+                        </li>
+                        <li class="flex justify-between items-center">
+                            <span class="font-bold">Shri Ram Ashram Public School (Class 10th)</span>
+                            <span class="text-sm text-gray-400">2018 – 2019</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8 mb-8 w-full">
+                    <h3 class="text-2xl font-bold mb-4">Professional Experience</h3>
+                    <details class="group cursor-pointer">
+                        <summary class="flex justify-between items-center py-2 px-4 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors">
+                            <span class="font-bold text-lg">Nest Software Private Limited</span>
+                            <span class="text-sm text-gray-400 transition-transform duration-300 transform group-open:rotate-90">+</span>
+                        </summary>
+                        <div class="mt-4 text-gray-300 space-y-2 px-4 py-2">
+                            <p class="font-semibold">Software Engineer <span class="text-sm font-normal text-gray-400 ml-2">April 2025 – Present</span></p>
+                            <ul class="list-disc list-inside space-y-1 text-sm text-gray-400">
+                                <li>Working as a Full-Stack Developer on an enterprise-grade HR ERP system to streamline and automate key HR functions.</li>
+                                <li>Built scalable backend APIs with Laravel and optimized database operations with MySQL.</li>
+                                <li>Developed modular and responsive UI using React.js, improving user experience and system maintainability.</li>
+                                <li>Reduced manual HR workload by over 40% by replacing paper-based processes with integrated digital solutions.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+                
+                 <div class="glass-card rounded-2xl p-8 w-full">
+                     <h3 class="text-2xl font-bold mb-4">Technical Skills</h3>
+                     <div class="flex flex-wrap gap-3">
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" class="skill-icon">
+                             React.js
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-plain.svg" alt="Laravel" class="skill-icon">
+                             Laravel
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="Spring Boot" class="skill-icon">
+                             Spring Boot
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" class="skill-icon">
+                             Node.js
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java" class="skill-icon">
+                             Java
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" class="skill-icon">
+                             Python
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="C++" class="skill-icon">
+                             C++
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" class="skill-icon">
+                             JavaScript
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/hibernate/hibernate-original.svg" alt="Hibernate" class="skill-icon">
+                             Hibernate
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL" class="skill-icon">
+                             MySQL
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="MongoDB" class="skill-icon">
+                             MongoDB
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/materialui/materialui-original.svg" alt="Material UI" class="skill-icon">
+                             Material UI
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" alt="Postman" class="skill-icon">
+                             Postman
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" class="skill-icon">
+                             Git
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Deployment" class="skill-icon">
+                             Deployment
+                         </span>
+                         <span class="skill-badge">
+                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/codepen/codepen-original.svg" alt="DSA" class="skill-icon">
+                             Data Structures & Algorithms
+                         </span>
+                     </div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="container mx-auto px-6 py-24">
+            <h2 class="section-heading gradient-text">Featured Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- Project 1: Video on Demand -->
+                <div class="glass-card rounded-xl overflow-hidden p-4 project-card fade-in-up cursor-pointer hover:scale-105 transition-all duration-300">
+                    <div class="relative overflow-hidden rounded-lg mb-3">
+                        <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=400&h=250&fit=crop&crop=center" alt="Video on Demand Project" class="w-full h-32 object-cover transition-transform duration-300 hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white font-bold">View Project</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-center">Video on Demand</h3>
+                    <p class="text-gray-400 text-xs mb-3 text-center">
+                        Java Swings, Java Networking, JDBC, MySQL
+                    </p>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Developed a robust Video on Demand (VoD) platform enabling seamless streaming and monetization of multimedia content. Implemented secure login with OTP verification and interactive UI using Java Swings.
+                    </p>
+                    <div class="mt-3 flex flex-wrap gap-1 justify-center">
+                        <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">Java</span>
+                        <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">MySQL</span>
+                        <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">Swing</span>
+                    </div>
+                </div>
+
+                <!-- Project 2: E-Learning Platform -->
+                <div class="glass-card rounded-xl overflow-hidden p-4 project-card fade-in-up cursor-pointer hover:scale-105 transition-all duration-300">
+                    <div class="relative overflow-hidden rounded-lg mb-3">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=250&fit=crop&crop=center" alt="E-Learning Platform Project" class="w-full h-32 object-cover transition-transform duration-300 hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white font-bold">View Project</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-center">E-Learning Platform</h3>
+                    <p class="text-gray-400 text-xs mb-3 text-center">
+                        React.js, Node.js, MongoDB, Stripe, Clerk
+                    </p>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Built a responsive LMS with secure authentication using Clerk API, course discovery, previews, reviews, and progress tracking. Integrated Stripe for secure course purchases with admin dashboard.
+                    </p>
+                    <div class="mt-3 flex flex-wrap gap-1 justify-center">
+                        <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">React</span>
+                        <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">Node.js</span>
+                        <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">MongoDB</span>
+                    </div>
+                </div>
+                
+                <!-- Project 3: BankEase -->
+                <div class="glass-card rounded-xl overflow-hidden p-4 project-card fade-in-up cursor-pointer hover:scale-105 transition-all duration-300">
+                    <div class="relative overflow-hidden rounded-lg mb-3">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop&crop=center" alt="BankEase Project" class="w-full h-32 object-cover transition-transform duration-300 hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white font-bold">View Project</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-center">BankEase (Banking Backend API)</h3>
+                    <p class="text-gray-400 text-xs mb-3 text-center">
+                        Spring Boot, MySQL
+                    </p>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Built a secure and scalable banking backend with Spring Boot implementing CRUD operations for customer/account management. Integrated SMS/Email notifications and document upload/download features.
+                    </p>
+                    <div class="mt-3 flex flex-wrap gap-1 justify-center">
+                        <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">Spring Boot</span>
+                        <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">MySQL</span>
+                        <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">REST API</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Freelance Services Section -->
+        <section id="freelance" class="container mx-auto px-6 py-24">
+            <h2 class="section-heading gradient-text">Freelance Services</h2>
+            <div class="max-w-3xl mx-auto text-center fade-in-up">
+                <p class="text-lg text-gray-300 leading-relaxed mb-8">
+                    Looking for a dedicated full-stack developer to bring your vision to life? I offer comprehensive freelance services, leveraging my expertise across the full web development stack. I specialize in building robust and scalable digital solutions that are fully tested for performance and reliability.
+                </p>
+                <div class="glass-card rounded-3xl p-8">
+                    <h3 class="text-3xl font-bold mb-4">What I Can Build For You:</h3>
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left text-gray-300 text-lg">
+                        <li class="flex items-center space-x-3">
+                            <svg class="w-6 h-6 text-purple-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                            <span>E-commerce Platforms</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <svg class="w-6 h-6 text-purple-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                            <span>Landing Pages & Static Websites</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <svg class="w-6 h-6 text-purple-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                            <span>Fully Responsive & Dynamic Websites with comprehensive testing</span>
+                        </li>
+                    </ul>
+                    <a href="mailto:bhaveshuppal2002@gmail.com?subject=Inquiry from your Portfolio Website" class="cursor-pointer mt-8 inline-block py-3 px-8 bg-purple-600 rounded-full text-white font-bold hover:bg-purple-700 transition-colors shadow-lg">
+                        Let's Discuss Your Project
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resume Section -->
+        <section id="resume" class="container mx-auto px-6 py-24">
+            <h2 class="section-heading gradient-text">My Resume</h2>
+            <div class="max-w-xl mx-auto glass-card p-8 rounded-3xl text-center fade-in-up">
+                <p class="text-lg text-gray-300 mb-8">
+                    You can view or download my complete resume for a detailed overview of my education, experience, and skills.
+                </p>
+                <a href="https://drive.google.com/file/d/1-l9G2tVBCD2GMC2MVNNsoHtL2U4xmEaQ/view?usp=sharing" target="_blank" class="py-3 px-6 bg-purple-600 rounded-full text-white font-bold hover:bg-purple-700 transition-colors shadow-lg">
+                    Download Resume
+                </a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="container mx-auto px-6 py-24">
+            <h2 class="section-heading gradient-text">Contact Me</h2>
+            <div class="max-w-xl mx-auto glass-card p-8 rounded-3xl text-center fade-in-up">
+                <p class="text-lg text-gray-300 mb-8">
+                    Ready to start a project or have a question? I'd love to hear from you.
+                    Please feel free to reach out via email or phone.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
+                    <a href="mailto:bhaveshuppal2002@gmail.com?subject=Inquiry from your Portfolio Website" class="py-3 px-6 bg-purple-600 rounded-full text-white font-bold hover:bg-purple-700 transition-colors shadow-lg">
+                        Send an Email
+                    </a>
+                    <a href="tel:8968064213" class="py-3 px-6 border border-gray-600 rounded-full text-gray-300 font-bold hover:bg-gray-800 transition-colors">
+                        Call Me
+                    </a>
+                </div>
+
+                <div class="mt-8 text-center text-lg text-gray-400">
+                    <p class="mb-2">Email: <a href="mailto:bhaveshuppal2002@gmail.com" class="text-purple-400 hover:underline">bhaveshuppal2002@gmail.com</a></p>
+                    <p>Phone: <a href="tel:8968064213" class="text-purple-400 hover:underline">+91 8968064213</a></p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="text-center py-8 text-gray-500 text-sm">
+        &copy; 2025 Bhavesh Uppal. All Rights Reserved.
+    </footer>
+    
+    <script>
+        // Particle Background Script
+        const particleContainer = document.getElementById('particle-bg');
+        function createParticle() {
+            const size = Math.random() * 3 + 1;
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            const duration = Math.random() * 10 + 5;
+            const endX = (Math.random() - 0.5) * window.innerWidth;
+            const endY = (Math.random() - 0.5) * window.innerHeight;
+            
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.setProperty('--x', `${endX}px`);
+            particle.style.setProperty('--y', `${endY}px`);
+
+            particleContainer.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, duration * 1000);
+        }
+        setInterval(createParticle, 300);
+
+        // Intersection Observer for fade-in effect
+        const sections = document.querySelectorAll('.section-heading, .fade-in-up');
+        const observerOptions = {
+            root: null,
+            threshold: 0.1,
+            rootMargin: "0px"
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+    </script>
+</body>
+</html>
